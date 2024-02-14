@@ -20,7 +20,7 @@ class _splash_ScreenState extends State<splash_Screen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     super.initState();
     Future.delayed(
-      const Duration(seconds: 4),
+      const Duration(seconds: 1),
       () {
         //exit fullscreen
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -29,6 +29,11 @@ class _splash_ScreenState extends State<splash_Screen> {
               systemNavigationBarColor: Colors.transparent,
               statusBarColor: Colors.transparent),
         );
+        //todo: comment to disable bypass
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (_) => const home_screen()));
+
+        //todo: uncomment to enable login
         if (FirebaseAuth.instance.currentUser != null) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const home_screen()));
