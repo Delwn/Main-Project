@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main_project_app/apis/api.dart';
 import 'package:main_project_app/main.dart';
@@ -159,6 +160,7 @@ class _login_pageState extends State<login_page> {
       )
           .then(
         (value) async {
+          Navigator.pop(context);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -171,6 +173,37 @@ class _login_pageState extends State<login_page> {
     } on FirebaseAuthException catch (e) {
       // ignore: avoid_print
       print(e);
+      print("Code: " + e.code);
+      switch (e.code) {
+        case "invalid-credential":
+          Fluttertoast.showToast(
+            msg: "Invalid credential",
+            // toastLength: Toast.LENGTH_SHORT,
+            // gravity: ToastGravity.CENTER,
+            // timeInSecForIosWeb: 1,
+            // backgroundColor: Colors.red,
+            // textColor: Colors.white,
+            // fontSize: 16.0
+          );
+        case "invalid-email":
+          Fluttertoast.showToast(
+            msg: "Invalid email id",
+            // toastLength: Toast.LENGTH_SHORT,
+            // gravity: ToastGravity.CENTER,
+            // timeInSecForIosWeb: 1,
+            // backgroundColor: Colors.red,
+            // textColor: Colors.white,
+            // fontSize: 16.0
+          );
+      }
+
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const login_page(),
+        ),
+      );
     }
     // navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
