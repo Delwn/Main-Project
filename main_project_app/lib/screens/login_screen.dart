@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +18,7 @@ class _login_pageState extends State<login_page> {
   final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
@@ -164,7 +164,7 @@ class _login_pageState extends State<login_page> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => const home_screen(),
+              builder: (_) => home_screen(),
             ),
           );
         },

@@ -36,7 +36,7 @@ class _splash_ScreenState extends State<splash_Screen> {
         //todo: uncomment to enable login
         if (FirebaseAuth.instance.currentUser != null) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => const home_screen()));
+              context, MaterialPageRoute(builder: (_) => home_screen()));
         } else {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const login_page()));
@@ -47,6 +47,7 @@ class _splash_ScreenState extends State<splash_Screen> {
 
   @override
   Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
