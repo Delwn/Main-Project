@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,8 @@ import 'package:main_project_app/screens/login_screen.dart';
 class home_screen extends StatelessWidget {
   home_screen({super.key});
   HomeController controller = Get.put(HomeController());
+  DatabaseReference ref = Get.put(FirebaseDatabase.instance.ref());
+
   @override
   Widget build(BuildContext context) {
     var mq = MediaQuery.of(context).size;

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -8,6 +9,12 @@ class HomeController extends GetxController {
 
   RxInt count = 0.obs;
   RxBool faultOccured = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    initFirebaseConnection();
+  }
 
   increment() => count++;
   get getImage => faultOccured.value ? faultImgPath : noFaultImgPath;
@@ -20,6 +27,24 @@ class HomeController extends GetxController {
 
   flipFaultOccured() {
     faultOccured.value = !faultOccured.value;
+    initFirebaseConnection();
     update();
+  }
+
+  initFirebaseConnection() async {
+    final db = FirebaseFirestore.instance;
+    final docRef = db.collection("vibdata").doc("realtimedata");
+    docRef.snapshots().listen(
+          onFirebaseEvent,
+          onError: (error) => print("Listen failed: $error"),
+        );
+  }
+
+  onFirebaseEvent(event) {
+    final data = event.data();
+    if (faultOccured.value != data['status']) {
+      faultOccured.value = data['status'];
+      update();
+    }
   }
 }
