@@ -6,14 +6,14 @@ import 'package:main_project_app/apis/api.dart';
 import 'package:main_project_app/main.dart';
 import 'package:main_project_app/screens/home_screen.dart';
 
-class login_page extends StatefulWidget {
-  const login_page({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<login_page> createState() => _login_pageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _login_pageState extends State<login_page> {
+class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   @override
@@ -164,7 +164,7 @@ class _login_pageState extends State<login_page> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => home_screen(),
+              builder: (_) => HomeScreen(),
             ),
           );
         },
@@ -173,27 +173,15 @@ class _login_pageState extends State<login_page> {
     } on FirebaseAuthException catch (e) {
       // ignore: avoid_print
       print(e);
-      print("Code: " + e.code);
+      print("Code: ${e.code}");
       switch (e.code) {
         case "invalid-credential":
           Fluttertoast.showToast(
             msg: "Invalid credential",
-            // toastLength: Toast.LENGTH_SHORT,
-            // gravity: ToastGravity.CENTER,
-            // timeInSecForIosWeb: 1,
-            // backgroundColor: Colors.red,
-            // textColor: Colors.white,
-            // fontSize: 16.0
           );
         case "invalid-email":
           Fluttertoast.showToast(
             msg: "Invalid email id",
-            // toastLength: Toast.LENGTH_SHORT,
-            // gravity: ToastGravity.CENTER,
-            // timeInSecForIosWeb: 1,
-            // backgroundColor: Colors.red,
-            // textColor: Colors.white,
-            // fontSize: 16.0
           );
       }
 
@@ -201,7 +189,7 @@ class _login_pageState extends State<login_page> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => const login_page(),
+          builder: (_) => const LoginPage(),
         ),
       );
     }

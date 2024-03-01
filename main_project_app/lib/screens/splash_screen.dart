@@ -7,14 +7,14 @@ import 'package:main_project_app/screens/home_screen.dart';
 import 'package:main_project_app/screens/login_screen.dart';
 
 // statefull widget as we are dynamically changing it
-class splash_Screen extends StatefulWidget {
-  const splash_Screen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<splash_Screen> createState() => _splash_ScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _splash_ScreenState extends State<splash_Screen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -36,10 +36,10 @@ class _splash_ScreenState extends State<splash_Screen> {
         //todo: uncomment to enable login
         if (FirebaseAuth.instance.currentUser != null) {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => home_screen()));
+              context, MaterialPageRoute(builder: (_) => HomeScreen()));
         } else {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => const login_page()));
+              context, MaterialPageRoute(builder: (_) => const LoginPage()));
         }
       },
     ); // after one and half a second

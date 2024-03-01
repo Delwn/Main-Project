@@ -3,12 +3,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:main_project_app/Controllers/homeController.dart';
+import 'package:main_project_app/Controllers/home_controller.dart';
 import 'package:main_project_app/apis/api.dart';
 import 'package:main_project_app/screens/login_screen.dart';
 
-class home_screen extends StatelessWidget {
-  home_screen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
   final HomeController controller = Get.put(HomeController());
   final DatabaseReference ref = Get.put(FirebaseDatabase.instance.ref());
 
@@ -42,7 +42,7 @@ class home_screen extends StatelessWidget {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => const login_page()))
+                                builder: (_) => const LoginPage()))
                       });
                 },
                 icon: const Icon(
