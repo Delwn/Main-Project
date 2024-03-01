@@ -9,6 +9,8 @@ class HomeController extends GetxController {
 
   RxInt count = 0.obs;
   RxBool faultOccured = false.obs;
+  RxDouble x = 0.0.obs;
+  RxDouble y = 0.0.obs;
 
   @override
   void onInit() {
@@ -42,9 +44,16 @@ class HomeController extends GetxController {
 
   onFirebaseEvent(event) {
     final data = event.data();
-    if (faultOccured.value != data['status']) {
+    if (faultOccured.value != data['status'] ||
+        x.value != data['x'] ||
+        y.value != data['y']) {
       faultOccured.value = data['status'];
+      x.value = data['x'] as double;
+      y.value = data['y'] as double;
+
       update();
     }
+
+    if (x.value != data['x']) {}
   }
 }
