@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:main_project_app/Controllers/home_controller.dart';
 import 'package:main_project_app/apis/api.dart';
+import 'package:main_project_app/screens/history_screen.dart';
 import 'package:main_project_app/screens/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -121,6 +122,32 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: mq.height / 14,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => HistoryScreen()));
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text(
+                        "View History",
+                        style: TextStyle(color: Color(0xFFE8E8E8)),
+                      ),
+                      SizedBox(
+                        width: mq.width / 40,
+                      ),
+                      const Icon(
+                        Icons.arrow_circle_right_outlined,
+                        color: Color(0xFFE8E8E8),
+                      )
+                    ],
+                  ),
+                )
                 // FilledButton(
                 //     onPressed: controller.flipFaultOccured,
                 //     child: Text("Switch")),
