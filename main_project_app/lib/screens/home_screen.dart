@@ -11,7 +11,7 @@ import 'package:main_project_app/screens/login_screen.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final HomeController controller = Get.put(HomeController());
-  final DatabaseReference ref = Get.put(FirebaseDatabase.instance.ref());
+  // final DatabaseReference ref = Get.put(FirebaseDatabase.instance.ref());
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +148,6 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 )
-                // FilledButton(
-                //     onPressed: controller.flipFaultOccured,
-                //     child: Text("Switch")),
               ],
             ),
           )),

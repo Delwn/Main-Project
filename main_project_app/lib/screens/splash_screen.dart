@@ -29,11 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
               systemNavigationBarColor: Colors.transparent,
               statusBarColor: Colors.transparent),
         );
-        //todo: comment to disable bypass
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (_) => const home_screen()));
 
-        //todo: uncomment to enable login
         if (FirebaseAuth.instance.currentUser != null) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => HomeScreen()));

@@ -53,7 +53,5 @@ class HomeController extends GetxController {
 
       update();
     }
-
-    if (x.value != data['x']) {}
   }
 }
