@@ -34,7 +34,7 @@ class HomeController extends GetxController {
   }
 
   initFirebaseConnection() async {
-    final db = FirebaseFirestore.instance;
+    final db = Get.put(FirebaseFirestore.instance);
     final docRef = db.collection("vibdata").doc("realtimedata");
     docRef.snapshots().listen(
           onFirebaseEvent,
