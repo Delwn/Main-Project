@@ -13,18 +13,21 @@ class HistoryScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SfCartesianChart(
-            series: <LineSeries<XValue, int>>[
-              LineSeries<XValue, int>(
-                  // dataSource: ,
-                  xValueMapper: (XValue xIndexValues, _) => xIndexValues.index,
-                  yValueMapper: (XValue xVibValues, _) => xVibValues.value)
-            ],
+          Obx(
+            () => SfCartesianChart(
+              series: controller.XLineSeries.value,
+              // series: <LineSeries<XValue, int>>[
+              //   LineSeries<XValue, int>(
+              //       dataSource: controller.xValues,
+              //       xValueMapper: (XValue xIndexValues, _) => xIndexValues.index,
+              //       yValueMapper: (XValue xVibValues, _) => xVibValues.value)
+              // ],
+            ),
           ),
-          FilledButton(
-            onPressed: controller.getHistoryData,
-            child: const Text("Refresh"),
+          SizedBox(
+            height: 20,
           ),
+          Obx(() => Text(controller.xValues.last.value.toString())),
         ],
       ),
     );
