@@ -2,19 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class XValue {
+class VibValue {
   int index = 0;
   double value = 0;
 
-  XValue({required this.index, required this.value});
+  VibValue({required this.index, required this.value});
 }
 
 class HistoryController extends GetxController {
   final FirebaseFirestore db = Get.find();
-  List<XValue> xValues = <XValue>[];
-  List<double> yValues = [];
-  RxList<LineSeries<XValue, int>> XLineSeries = <LineSeries<XValue, int>>[].obs;
-  late ChartSeriesController _chartSeriesController;
+  List<VibValue> xValues = <VibValue>[];
+  List<VibValue> yValues = <VibValue>[];
+
+  RxList<LineSeries<VibValue, int>> XLineSeries =
+      <LineSeries<VibValue, int>>[].obs;
+  late ChartSeriesController _xSeriesController;
+  late ChartSeriesController _ySeriesController;
 
   @override
   onInit() {
@@ -29,18 +32,26 @@ class HistoryController extends GetxController {
       (QuerySnapshot doc) {
         var dataList = doc.docs;
         for (var i = 0; i < dataList.length; i++) {
-          xValues.add(XValue(value: dataList[i]['x'], index: i));
+          xValues.add(VibValue(value: dataList[i]['x'], index: i));
+          yValues.add(VibValue(value: dataList[i]['y'], index: i));
         }
-        for (var x in xValues) {
-          print("X: ${x.value}");
+        for (var y in yValues) {
+          print("Y: ${y.value}");
         }
-        XLineSeries.add(LineSeries<XValue, int>(
+        XLineSeries.add(LineSeries<VibValue, int>(
             onRendererCreated: (ChartSeriesController controller) {
-              _chartSeriesController = controller;
+              _xSeriesController = controller;
             },
             dataSource: xValues,
-            xValueMapper: (XValue xIndexValues, _) => xIndexValues.index,
-            yValueMapper: (XValue xVibValues, _) => xVibValues.value));
+            xValueMapper: (VibValue xIndexValues, _) => xIndexValues.index,
+            yValueMapper: (VibValue xVibValues, _) => xVibValues.value));
+        XLineSeries.add(LineSeries<VibValue, int>(
+            onRendererCreated: (ChartSeriesController controller) {
+              _ySeriesController = controller;
+            },
+            dataSource: yValues,
+            xValueMapper: (VibValue yIndexValues, _) => yIndexValues.index,
+            yValueMapper: (VibValue yVibValues, _) => yVibValues.value));
         update();
         connectToRealTimeDB();
       },
@@ -60,10 +71,16 @@ class HistoryController extends GetxController {
   onFirebaseEvent(event) {
     final data = event.data();
     print(xValues.length);
-    xValues.add(XValue(value: data['x'], index: xValues.last.index + 1));
+    xValues.add(VibValue(value: data['x'], index: xValues.last.index + 1));
+    yValues.add(VibValue(value: data['y'], index: yValues.last.index + 1));
     xValues.removeAt(0);
-    _chartSeriesController.updateDataSource(
+    yValues.removeAt(0);
+    _xSeriesController.updateDataSource(
       addedDataIndex: xValues.length - 1,
+      removedDataIndex: 0,
+    );
+    _ySeriesController.updateDataSource(
+      addedDataIndex: yValues.length - 1,
       removedDataIndex: 0,
     );
     xValues.forEach((e) {

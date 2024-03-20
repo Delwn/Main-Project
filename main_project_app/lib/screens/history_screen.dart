@@ -10,25 +10,31 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Obx(
-            () => SfCartesianChart(
-              series: controller.XLineSeries.value,
-              // series: <LineSeries<XValue, int>>[
-              //   LineSeries<XValue, int>(
-              //       dataSource: controller.xValues,
-              //       xValueMapper: (XValue xIndexValues, _) => xIndexValues.index,
-              //       yValueMapper: (XValue xVibValues, _) => xVibValues.value)
-              // ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 50,
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Obx(() => Text(controller.xValues.last.value.toString())),
-        ],
+            Obx(
+              () => SfCartesianChart(
+                series: controller.XLineSeries.value,
+                // series: <LineSeries<XValue, int>>[
+                //   LineSeries<XValue, int>(
+                //       dataSource: controller.xValues,
+                //       xValueMapper: (XValue xIndexValues, _) => xIndexValues.index,
+                //       yValueMapper: (XValue xVibValues, _) => xVibValues.value)
+                // ],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Obx(() => Text(controller.xValues.last.value.toString())),
+          ],
+        ),
       ),
     );
   }
