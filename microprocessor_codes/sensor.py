@@ -3,6 +3,7 @@ import time
 import smbus
 import math
 import os
+import csv
 
 # Register
 power_mgmt_1 = 0x6b
@@ -41,35 +42,42 @@ address = 0x68       # via i2cdetect
 # Start the bus to send request for data.
 bus.write_byte_data(address, power_mgmt_1, 0)
 
-while True:
-        print("Gyroscope")
-        print("--------")
+with open("data.csv", "w", newline="") as file:
+            writer = csv.writer(file)
+            acce_data = ["x", "y", "z"]
+            writer.writerow(acce_data)
+            while True:
+                    print("Gyroscope")
+                    print("--------")
 
-        gyroscope_x = read_word_2c(0x43)
-        gyroscope_y = read_word_2c(0x45)
-        gyroscope_z = read_word_2c(0x47)
+                    gyroscope_x = read_word_2c(0x43) - (-0.47780152671755716)
+                    gyroscope_y = read_word_2c(0x45) - 0.23638167938931298
+                    gyroscope_z = read_word_2c(0x47) - (-0.7384580152671756)
 
-        print("gyroscope_x: ", ("%5d" % gyroscope_x), " scaled: ", (gyroscope_x / 131))
-        print("gyroscope_y: ", ("%5d" % gyroscope_y), " scaled: ", (gyroscope_y / 131))
-        print("gyroscope_z: ", ("%5d" % gyroscope_z), " scaled: ", (gyroscope_z / 131))
+                    print("gyroscope_x: ", ("%5d" % gyroscope_x), " scaled: ", (gyroscope_x / 131))
+                    print("gyroscope_y: ", ("%5d" % gyroscope_y), " scaled: ", (gyroscope_y / 131))
+                    print("gyroscope_z: ", ("%5d" % gyroscope_z), " scaled: ", (gyroscope_z / 131))
+                    
+                    
+                    writer.writerow([gyroscope_x / 131, gyroscope_y / 131, gyroscope_z/ 131])
 
-#        print("Acceleratometer")
-#        print("---------------------")
+            #        print("Acceleratometer")
+            #        print("---------------------")
 
-        acceleration_x = read_word_2c(0x3b)
-        acceleration_y = read_word_2c(0x3d)
-        acceleration_z = read_word_2c(0x3f)
+                    acceleration_x = read_word_2c(0x3b)
+                    acceleration_y = read_word_2c(0x3d)
+                    acceleration_z = read_word_2c(0x3f)
 
-        acceleration_x_scaled = acceleration_x / 16384.0
-        acceleration_y_scaled = acceleration_y / 16384.0
-        acceleration_z_scaled = acceleration_z / 16384.0
+                    acceleration_x_scaled = acceleration_x / 16384.0
+                    acceleration_y_scaled = acceleration_y / 16384.0
+                    acceleration_z_scaled = acceleration_z / 16384.0
 
-        print("acceleration_x: ", ("%6d" % acceleration_x), " scaled: ", acceleration_x_scaled)
-        print("acceleration_y: ", ("%6d" % acceleration_y), " scaled: ", acceleration_y_scaled)
-        print("acceleration_z: ", ("%6d" % acceleration_z), " scaled: ", acceleration_z_scaled)
+                    print("acceleration_x: ", ("%6d" % acceleration_x), " scaled: ", acceleration_x_scaled)
+                    print("acceleration_y: ", ("%6d" % acceleration_y), " scaled: ", acceleration_y_scaled)
+                    print("acceleration_z: ", ("%6d" % acceleration_z), " scaled: ", acceleration_z_scaled)
 
-#        print("X Rotation: " , get_x_rotation(acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled))
-#        print("Y Rotation: " , get_y_rotation(acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled))
-        print("\n\n")
-        time.sleep(0.5)
-#        os.system('cls' if os.name == 'nt' else 'clear')
+            #        print("X Rotation: " , get_x_rotation(acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled))
+            #        print("Y Rotation: " , get_y_rotation(acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled))
+                    print("\n\n")
+                    time.sleep(0.5)
+            #        os.system('cls' if os.name == 'nt' else 'clear')
