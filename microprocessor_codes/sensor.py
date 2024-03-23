@@ -42,42 +42,50 @@ address = 0x68       # via i2cdetect
 # Start the bus to send request for data.
 bus.write_byte_data(address, power_mgmt_1, 0)
 
-with open("data.csv", "w", newline="") as file:
-            writer = csv.writer(file)
-            acce_data = ["x", "y", "z"]
-            writer.writerow(acce_data)
-            while True:
-                    print("Gyroscope")
-                    print("--------")
 
-                    gyroscope_x = read_word_2c(0x43) - (-0.47780152671755716)
-                    gyroscope_y = read_word_2c(0x45) - 0.23638167938931298
-                    gyroscope_z = read_word_2c(0x47) - (-0.7384580152671756)
+file_g = open("gyro.csv", "w", newline="")
+file_a = open("acc.csv", "w", newline="")
+writer_g = csv.writer(file_g)
+writer_a = csv.writer(file_a)
+acce_data = ["x", "y", "z"]
+writer_g.writerow(acce_data)
+writer_a.writerow(acce_data)
+i = 0
+while True:
+        print("\n" + i)
+        print("Gyroscope")
+        print("--------")
 
-                    print("gyroscope_x: ", ("%5d" % gyroscope_x), " scaled: ", (gyroscope_x / 131))
-                    print("gyroscope_y: ", ("%5d" % gyroscope_y), " scaled: ", (gyroscope_y / 131))
-                    print("gyroscope_z: ", ("%5d" % gyroscope_z), " scaled: ", (gyroscope_z / 131))
-                    
-                    
-                    writer.writerow([gyroscope_x / 131, gyroscope_y / 131, gyroscope_z/ 131])
+        gyroscope_x = read_word_2c(0x43) - (-0.47780152671755716)
+        gyroscope_y = read_word_2c(0x45) - 0.23638167938931298
+        gyroscope_z = read_word_2c(0x47) - (-0.7384580152671756)
 
-            #        print("Acceleratometer")
-            #        print("---------------------")
 
-                    acceleration_x = read_word_2c(0x3b)
-                    acceleration_y = read_word_2c(0x3d)
-                    acceleration_z = read_word_2c(0x3f)
 
-                    acceleration_x_scaled = acceleration_x / 16384.0
-                    acceleration_y_scaled = acceleration_y / 16384.0
-                    acceleration_z_scaled = acceleration_z / 16384.0
+        print("gyroscope_x: ", ("%5d" % gyroscope_x), " scaled: ", (gyroscope_x / 131))
+        print("gyroscope_y: ", ("%5d" % gyroscope_y), " scaled: ", (gyroscope_y / 131))
+        print("gyroscope_z: ", ("%5d" % gyroscope_z), " scaled: ", (gyroscope_z / 131))
+        
+        
+        writer_g.writerow([gyroscope_x / 131, gyroscope_y / 131, gyroscope_z/ 131])
 
-                    print("acceleration_x: ", ("%6d" % acceleration_x), " scaled: ", acceleration_x_scaled)
-                    print("acceleration_y: ", ("%6d" % acceleration_y), " scaled: ", acceleration_y_scaled)
-                    print("acceleration_z: ", ("%6d" % acceleration_z), " scaled: ", acceleration_z_scaled)
+        print("Acceleratometer")
+        print("---------------------")
 
-            #        print("X Rotation: " , get_x_rotation(acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled))
-            #        print("Y Rotation: " , get_y_rotation(acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled))
-                    print("\n\n")
-                    time.sleep(0.5)
-            #        os.system('cls' if os.name == 'nt' else 'clear')
+        acceleration_x = read_word_2c(0x3b)
+        acceleration_y = read_word_2c(0x3d)
+        acceleration_z = read_word_2c(0x3f)
+
+        acceleration_x_scaled = acceleration_x / 16384.0
+        acceleration_y_scaled = acceleration_y / 16384.0
+        acceleration_z_scaled = acceleration_z / 16384.0
+
+        print("acceleration_x: ", ("%6d" % acceleration_x), " scaled: ", acceleration_x_scaled)
+        print("acceleration_y: ", ("%6d" % acceleration_y), " scaled: ", acceleration_y_scaled)
+        print("acceleration_z: ", ("%6d" % acceleration_z), " scaled: ", acceleration_z_scaled)
+
+        writer_a.writerow([acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled])
+        print("\n\n")
+        i += 1
+        time.sleep(0.5)
+
