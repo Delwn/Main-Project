@@ -1,4 +1,4 @@
-# Machine Fault Detection using Machine Learning by Vibration Analysis
+# Machine Fault Detection through Vibration Analysis using Machine Learning
 ## Abstract 
 
 this is a test
