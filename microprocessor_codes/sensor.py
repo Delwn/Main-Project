@@ -52,7 +52,7 @@ writer_g.writerow(acce_data)
 writer_a.writerow(acce_data)
 i = 0
 while True:
-        print("\n" + i)
+        print("\n" + str(i))
         print("Gyroscope")
         print("--------")
 
@@ -87,5 +87,5 @@ while True:
         writer_a.writerow([acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled])
         print("\n\n")
         i += 1
-        time.sleep(0.5)
+        #time.sleep(0.5)
 
