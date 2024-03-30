@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:main_project_app/Controllers/history_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -9,29 +10,137 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mq = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color(0xff181822),
       appBar: AppBar(
-        title: const Text("Analysis"),
+        backgroundColor: Color(0xff181822),
+        centerTitle: true,
+        title: Text("Analysis",
+            style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Obx(
               () => SfCartesianChart(
                 series: controller.XLineSeries.value,
+                // backgroundColor: Colors.black,
+                // plotAreaBackgroundColor: Colors.black,
+                // plotAreaBorderColor: Colors.cyan,
+                // borderColor: Colors.cyan,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AnalysisIconWidget(image: "alltime", text: "All time"),
+                AnalysisIconWidget(image: "current", text: "This session"),
+              ],
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AnalysisIconWidget(image: "alltime", text: "All time"),
+                AnalysisIconWidget(image: "current", text: "This session"),
+              ],
+            )
+            // Container(
+            //   decoration: const BoxDecoration(color: Color(0x11000000)),
+            //   padding: EdgeInsets.all(20),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       const Text("Number of faults"),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //         children: [
+            //           Obx(() => Text(
+            //               "All time: ${controller.allTimeFaults.value} fault(s)")),
+            //           Obx(() => Text(
+            //               "This session: ${controller.sessionFaults.value} fault(s)")),
+            //         ],
+            //       )
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   decoration: const BoxDecoration(color: Color(0x11000000)),
+            //   padding: EdgeInsets.all(20),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       const Text("Fault rate"),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //         children: [
+            //           Obx(() => Text("Peak: ${controller.peakRate.value} fpm")),
+            //           Obx(() =>
+            //               Text("Current: ${controller.currentRate.value} fpm")),
+            //         ],
+            //       )
+            //     ],
+            //   ),
+            // ),
             // Obx(() => Text(controller.xValues.last.value.toString())),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AnalysisIconWidget extends StatelessWidget {
+  AnalysisIconWidget({super.key, required this.image, required this.text});
+  final HistoryController controller = Get.find();
+  final String image, text;
+  @override
+  Widget build(BuildContext context) {
+    final mq = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.all(30),
+      decoration: const BoxDecoration(
+        color: Color(0xff22222e),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      width: mq.width / 2.5,
+      child: Column(
+        children: [
+          Image.asset("assets/icons/$image.png"),
+          const SizedBox(
+            height: 10,
+          ),
+          Obx(() => Text(
+                "${controller.allTimeFaults.value}",
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w300),
+              )),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            text,
+            style: const TextStyle(color: Colors.white24),
+          )
+        ],
       ),
     );
   }

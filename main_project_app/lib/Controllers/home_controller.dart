@@ -11,6 +11,7 @@ class HomeController extends GetxController {
   RxBool faultOccured = false.obs;
   RxDouble x = 0.0.obs;
   RxDouble y = 0.0.obs;
+  RxDouble z = 0.0.obs;
 
   @override
   void onInit() {
@@ -46,10 +47,12 @@ class HomeController extends GetxController {
     final data = event.data();
     if (faultOccured.value != data['status'] ||
         x.value != data['x'] ||
-        y.value != data['y']) {
+        y.value != data['y'] ||
+        z.value != data['z']) {
       faultOccured.value = data['status'];
       x.value = data['x'] as double;
       y.value = data['y'] as double;
+      z.value = data['z'] as double;
 
       update();
     }

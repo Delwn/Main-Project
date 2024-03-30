@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -114,6 +113,13 @@ class HomeScreen extends StatelessWidget {
                           )),
                       Obx(() => Text(
                             "Y: ${controller.y.value}",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          )),
+                      Obx(() => Text(
+                            "Z: ${controller.z.value}",
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,

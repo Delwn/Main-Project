@@ -11,6 +11,12 @@ class VibValue {
 
 class HistoryController extends GetxController {
   final FirebaseFirestore db = Get.find();
+
+  RxInt allTimeFaults = 0.obs;
+  RxInt sessionFaults = 0.obs;
+  RxInt peakRate = 0.obs;
+  RxInt currentRate = 0.obs;
+
   List<VibValue> xValues = <VibValue>[];
   List<VibValue> yValues = <VibValue>[];
 
@@ -22,7 +28,6 @@ class HistoryController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    print("here");
     getHistoryData();
   }
 
@@ -57,6 +62,12 @@ class HistoryController extends GetxController {
       },
       onError: (e) => print("Error getting document: $e"),
     );
+
+    final analysisRef = db.collection("History").doc("analysis");
+    analysisRef.snapshots().listen(
+          onAnalysisEvent,
+          onError: (error) => print("Listen failed: $error"),
+        );
   }
 
   connectToRealTimeDB() {
@@ -87,5 +98,14 @@ class HistoryController extends GetxController {
       print("value: ${e.value} index: ${e.index}");
     });
     print("New value added ${xValues.last.value} index ${xValues.length}");
+  }
+
+  onAnalysisEvent(event) {
+    final data = event.data();
+    allTimeFaults.value = data['alltime'] as int ?? 0;
+    peakRate.value = data['peak'] as int ?? 0;
+    currentRate.value = data['current'] as int ?? 0;
+    sessionFaults.value = data['session'] as int ?? 0;
+    update();
   }
 }

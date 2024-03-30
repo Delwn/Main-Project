@@ -10,8 +10,10 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const GetMaterialApp(
+  runApp(GetMaterialApp(
     home: SplashScreen(),
     debugShowCheckedModeBanner: false,
+    theme: ThemeData.dark(),
+    themeMode: ThemeMode.dark,
   ));
 }
