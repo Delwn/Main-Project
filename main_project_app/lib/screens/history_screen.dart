@@ -27,8 +27,8 @@ class HistoryScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: mq.height / 36,
             ),
             Obx(
               () => SfCartesianChart(
@@ -39,26 +39,29 @@ class HistoryScreen extends StatelessWidget {
                 // borderColor: Colors.cyan,
               ),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: mq.height / 36,
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AnalysisIconWidget(image: "alltime", text: "All time"),
-                AnalysisIconWidget(image: "current", text: "This session"),
+                AnalysisIconWidget(image: "alltime", text: "All time faults"),
+                AnalysisIconWidget(
+                    image: "current", text: "Faults in this session"),
               ],
             ),
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: mq.height / 36,
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AnalysisIconWidget(image: "alltime", text: "All time"),
-                AnalysisIconWidget(image: "current", text: "This session"),
+                AnalysisIconWidget(
+                    image: "peak", text: "Peak fault rate (fpm)"),
+                AnalysisIconWidget(
+                    image: "session", text: "Session fault rate (fpm)"),
               ],
             )
             // Container(
@@ -120,7 +123,10 @@ class AnalysisIconWidget extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       width: mq.width / 2.5,
+      height: mq.height / 4.7,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Image.asset("assets/icons/$image.png"),
           const SizedBox(
@@ -139,6 +145,7 @@ class AnalysisIconWidget extends StatelessWidget {
           Text(
             text,
             style: const TextStyle(color: Colors.white24),
+            textAlign: TextAlign.center,
           )
         ],
       ),
