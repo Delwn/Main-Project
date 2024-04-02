@@ -4,6 +4,9 @@ import smbus
 import math
 import os
 import csv
+import tensorflow as tf
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 # Register
 power_mgmt_1 = 0x6b
@@ -38,6 +41,10 @@ def get_x_rotation(x,y,z):
 
 bus = smbus.SMBus(1)
 address = 0x68       # via i2cdetect
+#model = tf.keras.models.load_model("svm.h5") #load model
+firebase_admin.initialize_app()
+db = firestore.client() #init firebase
+collection_name_2 = "vibdata"
 
 # Start the bus to send request for data.
 bus.write_byte_data(address, power_mgmt_1, 0)
@@ -66,6 +73,14 @@ while True:
         print("gyroscope_y: ", ("%5d" % gyroscope_y), " scaled: ", (gyroscope_y / 131))
         print("gyroscope_z: ", ("%5d" % gyroscope_z), " scaled: ", (gyroscope_z / 131))
         
+        data_point = {
+        "x": gyroscope_x,
+        "y": gyroscope_y,
+        "z": gyroscope_z,
+        "fault_status": "0",
+        }
+        db.collection(collection_name_2).add(data_point)
+        
         
         writer_g.writerow([gyroscope_x / 131, gyroscope_y / 131, gyroscope_z/ 131])
 
@@ -87,5 +102,5 @@ while True:
         writer_a.writerow([acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled])
         print("\n\n")
         i += 1
-        #time.sleep(0.5)
+        time.sleep(0.5)
 
