@@ -74,58 +74,62 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: mq.height / 10,
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  height: 100,
-                  width: 200,
-                  decoration: BoxDecoration(
-                      color: !controller.faultOccured.value
-                          ? const Color(0xff11ab1c)
-                          : const Color(0xffb91f15),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: !controller.faultOccured.value
-                              ? const Color(0xff175d1b)
-                              : const Color(0xff590e0a),
-                          offset: const Offset(10, 10),
-                          blurRadius: 20,
-                          // spreadRadius: 1,
-                        ),
-                        BoxShadow(
-                          color: !controller.faultOccured.value
-                              ? const Color(0xff35d741)
-                              : const Color(0xffee392e),
-                          offset: const Offset(-10, -10),
-                          blurRadius: 20,
-                          // spreadRadius: 5,
-                        ),
-                      ]),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Obx(() => Text(
-                            "X: ${controller.x.value}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          )),
-                      Obx(() => Text(
-                            "Y: ${controller.y.value}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          )),
-                      Obx(() => Text(
-                            "Z: ${controller.z.value}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          ))
-                    ],
+                SizedBox(
+                  height: 150,
+                  width: 300,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 100,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        color: !controller.faultOccured.value
+                            ? const Color(0xff11ab1c)
+                            : const Color(0xffb91f15),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: !controller.faultOccured.value
+                                ? const Color(0xff175d1b)
+                                : const Color(0xff590e0a),
+                            offset: const Offset(10, 10),
+                            blurRadius: 20,
+                            // spreadRadius: 1,
+                          ),
+                          BoxShadow(
+                            color: !controller.faultOccured.value
+                                ? const Color(0xff35d741)
+                                : const Color(0xffee392e),
+                            offset: const Offset(-10, -10),
+                            blurRadius: 20,
+                            // spreadRadius: 5,
+                          ),
+                        ]),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Obx(() => Text(
+                              "X: ${controller.x.value}",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            )),
+                        Obx(() => Text(
+                              "Y: ${controller.y.value}",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            )),
+                        Obx(() => Text(
+                              "Z: ${controller.z.value}",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ))
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

@@ -4,6 +4,9 @@ import smbus
 import math
 import os
 import csv
+import tensorflow as tf
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 # Register
 power_mgmt_1 = 0x6b
@@ -38,6 +41,12 @@ def get_x_rotation(x,y,z):
 
 bus = smbus.SMBus(1)
 address = 0x68       # via i2cdetect
+#model = tf.keras.models.load_model("svm.h5") #load model
+cred = credentials.Certificate("firebase-api.json")
+firebase_admin.initialize_app(cred)
+
+db = firestore.client() #init firebase
+collection_name_2 = "vibdata"
 
 # Start the bus to send request for data.
 bus.write_byte_data(address, power_mgmt_1, 0)
@@ -60,14 +69,12 @@ while True:
         gyroscope_y = read_word_2c(0x45) - 0.23638167938931298
         gyroscope_z = read_word_2c(0x47) - (-0.7384580152671756)
 
-
-
-        print("gyroscope_x: ", ("%5d" % gyroscope_x), " scaled: ", (gyroscope_x / 131))
-        print("gyroscope_y: ", ("%5d" % gyroscope_y), " scaled: ", (gyroscope_y / 131))
-        print("gyroscope_z: ", ("%5d" % gyroscope_z), " scaled: ", (gyroscope_z / 131))
+       # gyroscope_x_scaled = (gyroscope_x / 131);
+       # gyroscope_y_scaled = (gyroscope_y / 131);
+       # gyroscope_z_scaled = (gyroscope_z / 131);
         
         
-        writer_g.writerow([gyroscope_x / 131, gyroscope_y / 131, gyroscope_z/ 131])
+        # writer_g.writerow([gyroscope_x / 131, gyroscope_y / 131, gyroscope_z/ 131])
 
         print("Acceleratometer")
         print("---------------------")
@@ -80,11 +87,19 @@ while True:
         acceleration_y_scaled = acceleration_y / 16384.0
         acceleration_z_scaled = acceleration_z / 16384.0
 
-        print("acceleration_x: ", ("%6d" % acceleration_x), " scaled: ", acceleration_x_scaled)
-        print("acceleration_y: ", ("%6d" % acceleration_y), " scaled: ", acceleration_y_scaled)
-        print("acceleration_z: ", ("%6d" % acceleration_z), " scaled: ", acceleration_z_scaled)
+        #print("acceleration_x: ", ("%6d" % acceleration_x), " scaled: ", acceleration_x_scaled)
+        #print("acceleration_y: ", ("%6d" % acceleration_y), " scaled: ", acceleration_y_scaled)
+        #print("acceleration_z: ", ("%6d" % acceleration_z), " scaled: ", acceleration_z_scaled)
+        
+        data_point = {
+        "x": acceleration_x_scaled,
+        "y": acceleration_y_scaled,
+        "z": acceleration_z_scaled,
+        "status": False,
+        }
+        db.collection(collection_name_2).document("realtimedata").set(data_point)
 
-        writer_a.writerow([acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled])
+        #writer_a.writerow([acceleration_x_scaled, acceleration_y_scaled, acceleration_z_scaled])
         print("\n\n")
         i += 1
         #time.sleep(0.5)
