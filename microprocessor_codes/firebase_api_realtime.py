@@ -12,7 +12,7 @@ from google.colab import drive
 
 drive.mount("/content/drive")
 
-model = tf.keras.models.load_model("/content/drive/MyDrive/project files/model_name.h5")
+model = tf.keras.models.load_model("svm.h5")
 
 values = np.loadtxt("/content/drive/MyDrive/project files/realtime.csv", delimiter=",")
 print(values)
@@ -27,7 +27,7 @@ cred = credentials.Certificate(
 
 db = firestore.client()
 
-collection_name_2 = "Real_Time_Data"
+collection_name_2 = "vibdata"
 
 for i in range(len(values)):
     data_point = {
