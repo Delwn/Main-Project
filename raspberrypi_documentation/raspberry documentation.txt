@@ -1,0 +1,21 @@
+open putty
+name and password
+sudo raspi-config
+interface options->vnc->yes
+interfacee options->i2c->yes
+{
+	3 and 5 pins are i2c pins used for connecting sensor
+	pin2 - vcc
+	pin 6- ground
+	pin 3- serial data (sda for data reading from sensor)| i2c
+	pin 5- serial clock(scl)			     | i2c~
+}
+--------------connect wires to raspberry pi-------------
+
+sudo i2cdetect -y 1 (to ckeck data fetching)
+
+open real vnc viewer
+run code sensor.py----->data will be read and stored in data.csv file
+run code for plotting the data
+
+
